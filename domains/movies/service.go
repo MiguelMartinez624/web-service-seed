@@ -1,6 +1,8 @@
 package movies
 
-import "context"
+import (
+	"context"
+)
 
 type Service struct {
 	store Store
@@ -18,6 +20,6 @@ func (s *Service) GetAll(ctx context.Context) (movies []Movie, err error) {
 }
 
 func (s *Service) CreateMovie(ctx context.Context, movie *Movie) (ID string, err error) {
-
-	return
+	ID, err = s.store.Save(ctx, movie)
+	return ID, err
 }

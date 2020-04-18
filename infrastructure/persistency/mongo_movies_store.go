@@ -2,9 +2,11 @@ package persistency
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/miguelmartinez624/web-service-seed/domains/movies"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -46,5 +48,10 @@ func (s *MongoDBMoviesStore) Save(ctx context.Context, movie *movies.Movie) (ID 
 	if err != nil {
 		return "", err
 	}
-	return result.InsertedID.(string), nil
+
+	if oid, ok := result.InsertedID.(primitive.ObjectID); ok {
+		return oid.Hex(), nil
+	}
+
+	return fmt.Sprintf("%v", result.InsertedID), nil
 }
