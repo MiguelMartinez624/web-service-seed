@@ -8,11 +8,12 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/miguelmartinez624/web-service-seed/fascade"
-	"github.com/miguelmartinez624/web-service-seed/infrastructure/controllers"
-	"github.com/miguelmartinez624/web-service-seed/infrastructure/persistency"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+
+	"github.com/miguelmartinez624/web-service-seed/facade"
+	"github.com/miguelmartinez624/web-service-seed/infrastructure/controllers"
+	"github.com/miguelmartinez624/web-service-seed/infrastructure/persistency"
 )
 
 const DB_URI = "mongodb://localhost:27017"
@@ -26,7 +27,7 @@ func main() {
 	moviesStore := persistency.NewMongoDBMovieStore(client.Database("kuebana"))
 	autorsStore := persistency.NewMongoDBAutorsStore(client.Database("kuebana"))
 
-	module := fascade.NewMovies(moviesStore, autorsStore)
+	module := facade.NewMovies(moviesStore, autorsStore)
 
 	//Http Controller
 	httpController := controllers.NewMoviesHttp(module)

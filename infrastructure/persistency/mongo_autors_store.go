@@ -41,7 +41,7 @@ func (s *MongoDBAutorsStore) GetByID(ctx context.Context, ID string) (autor *aut
 
 		switch err.Error() {
 		case "mongo: no documents in result":
-			return nil, autors.AutorNoExistError
+			return nil, autors.AutorDontExistError
 		default:
 			return nil, err
 		}

@@ -1,4 +1,4 @@
-package fascade
+package facade
 
 import (
 	"context"
@@ -34,7 +34,7 @@ func (m *Movies) CreateMovie(ctx context.Context, movie *movies.Movie) (ID strin
 
 	//If the autor dosent Exist
 	if autor == nil {
-		return "", autors.AutorNoExistError
+		return "", autors.AutorDontExistError
 	}
 
 	return m.movieService.CreateMovie(ctx, movie)
