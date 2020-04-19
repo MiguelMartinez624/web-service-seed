@@ -1,9 +1,9 @@
-package movies
+package autors
 
 import "errors"
 
 var (
-	MissingTitleError error = simpleErr("Password cant be empty")
+	MissingNameError error = simpleErr("Missing Autor's Name")
 )
 
 // simpleErr create simple error with flat msg
