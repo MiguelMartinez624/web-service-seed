@@ -22,12 +22,16 @@ func main() {
 	client, cancel := ConnectMongoDB(DB_URI)
 	defer cancel()
 
+	// MongoDB instances
 	moviesStore := persistency.NewMongoDBMovieStore(client.Database("kuebana"))
-	module := fascade.NewMovies(moviesStore)
+	autorsStore := persistency.NewMongoDBAutorsStore(client.Database("kuebana"))
+
+	module := fascade.NewMovies(moviesStore, autorsStore)
+
+	//Http Controller
 	httpController := controllers.NewMoviesHttp(module)
 
 	//we add endpoints here to mux
-
 	r := mux.NewRouter()
 	r.HandleFunc("/movies", httpController.GetMoviesHandler).Methods("GET")
 	r.HandleFunc("/movies", httpController.CreateHandler).Methods("POST")

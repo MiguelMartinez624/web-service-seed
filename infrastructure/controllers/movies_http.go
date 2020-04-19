@@ -21,6 +21,7 @@ func (m MoviesHttp) GetMoviesHandler(w http.ResponseWriter, r *http.Request) {
 	movies, err := m.moviesCases.GetMovies(r.Context())
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 
 	json.NewEncoder(w).Encode(movies)
@@ -36,10 +37,12 @@ func (m MoviesHttp) CreateHandler(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&movie)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 	ID, err := m.moviesCases.CreateMovie(r.Context(), &movie)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 
 	fmt.Fprintf(w, "New Movie ID: %+v", ID)

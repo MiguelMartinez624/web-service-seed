@@ -11,6 +11,18 @@ func NewService(store Store) *Service {
 	return &Service{store: store, validator: &Validator{}}
 }
 
+func (s *Service) FindAutorByID(ctx context.Context, ID string) (autor *Autor, err error) {
+	if ID == "" {
+		return nil, InvalidIDError
+	}
+
+	autor, err = s.store.GetByID(ctx, ID)
+	if err != nil {
+		return nil, err
+	}
+	return autor, err
+}
+
 func (s *Service) GetAll(ctx context.Context) (autors []Autor, err error) {
 	autors, err = s.store.GetAll(ctx)
 	if err != nil {
