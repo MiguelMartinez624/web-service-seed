@@ -23,6 +23,7 @@ func (s *MongoDBMoviesStore) GetAll(ctx context.Context) (movies []movies.Movie,
 	if err != nil {
 		return nil, err
 	}
+	defer cursor.Close(ctx)
 
 	err = cursor.All(ctx, &movies)
 	if err != nil {
